@@ -1,0 +1,62 @@
+[
+  {
+    "id": "job1",
+    "title": "大型物流センター 仕分け作業",
+    "period": "2024/07/15 - 2024/08/31",
+    "location": "東京都江東区",
+    "hourlyWage": 1200,
+    "recruitNumber": 5,
+    "description": "大型物流センターでの商品仕分け作業です。未経験者歓迎、丁寧に指導いたします。",
+    "isFavorite": false,
+    "status": "募集中",
+    "createdAt": "2024-07-01T00:00:00.000Z"
+  },
+  {
+    "id": "job2", 
+    "title": "食品倉庫 ピッキング作業",
+    "period": "2024/07/20 - 2024/09/30",
+    "location": "神奈川県川崎市",
+    "hourlyWage": 1300,
+    "recruitNumber": 3,
+    "description": "冷凍・冷蔵食品のピッキング作業です。防寒着貸与あり。",
+    "isFavorite": true,
+    "status": "募集中",
+    "createdAt": "2024-07-02T00:00:00.000Z"
+  },
+  {
+    "id": "job3",
+    "title": "アパレル倉庫 検品・梱包",
+    "period": "2024/08/01 - 2024/10/31", 
+    "location": "埼玉県越谷市",
+    "hourlyWage": 1150,
+    "recruitNumber": 8,
+    "description": "アパレル商品の検品・梱包作業です。軽作業で女性も活躍中。",
+    "isFavorite": false,
+    "status": "募集中",
+    "createdAt": "2024-07-03T00:00:00.000Z"
+  },
+  {
+    "id": "job4",
+    "title": "家電量販店 配送準備作業",
+    "period": "2024/07/10 - 2024/08/15",
+    "location": "千葉県船橋市", 
+    "hourlyWage": 1400,
+    "recruitNumber": 2,
+    "description": "家電製品の配送準備・積み込み作業です。フォークリフト免許者優遇。",
+    "isFavorite": false,
+    "status": "募集中",
+    "createdAt": "2024-07-04T00:00:00.000Z"
+  },
+  {
+    "id": "job5",
+    "title": "EC物流センター 出荷作業",
+    "period": "2024/08/05 - 2024/12/31",
+    "location": "東京都品川区",
+    "hourlyWage": 1250,
+    "recruitNumber": 10,
+    "description": "ECサイトの商品出荷作業です。長期勤務可能な方大歓迎。",
+    "isFavorite": true,
+    "status": "募集中",
+    "createdAt": "2024-07-05T00:00:00.000Z"
+  }
+] 

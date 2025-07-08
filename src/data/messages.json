@@ -1,0 +1,82 @@
+[
+  {
+    "id": "msg1",
+    "chatRoomId": "room1",
+    "senderId": "admin",
+    "content": "田中さん、お疲れ様です。大型物流センターの案件についてご相談があります。",
+    "messageType": "text",
+    "sentAt": "2024-07-08T09:15:00.000Z"
+  },
+  {
+    "id": "msg2",
+    "chatRoomId": "room1",
+    "senderId": "user1",
+    "content": "お疲れ様です。はい、どのような内容でしょうか？",
+    "messageType": "text",
+    "sentAt": "2024-07-08T09:18:00.000Z"
+  },
+  {
+    "id": "msg3",
+    "chatRoomId": "room1",
+    "senderId": "admin",
+    "content": "期間は2024/07/15から8/31までを予定しています。時給1200円で、週3〜5日程度の勤務を想定しています。ご都合はいかがでしょうか？",
+    "messageType": "text",
+    "sentAt": "2024-07-08T09:20:00.000Z"
+  },
+  {
+    "id": "msg4",
+    "chatRoomId": "room1",
+    "senderId": "user1",
+    "content": "ありがとうございます。期間と条件について確認させていただきました。週4日程度でお願いできればと思います。",
+    "messageType": "text",
+    "sentAt": "2024-07-08T14:30:00.000Z"
+  },
+  {
+    "id": "msg5",
+    "chatRoomId": "room2",
+    "senderId": "user2",
+    "content": "お疲れ様です。食品倉庫の案件についてお聞きしたいことがあります。",
+    "messageType": "text",
+    "sentAt": "2024-07-08T10:30:00.000Z"
+  },
+  {
+    "id": "msg6",
+    "chatRoomId": "room2",
+    "senderId": "admin",
+    "content": "佐藤さん、お疲れ様です。どのようなご質問でしょうか？",
+    "messageType": "text",
+    "sentAt": "2024-07-08T10:35:00.000Z"
+  },
+  {
+    "id": "msg7",
+    "chatRoomId": "room2", 
+    "senderId": "user2",
+    "content": "冷凍庫での作業とのことですが、防寒着のサイズはどのようになっていますか？",
+    "messageType": "text",
+    "sentAt": "2024-07-08T10:40:00.000Z"
+  },
+  {
+    "id": "msg8",
+    "chatRoomId": "room2",
+    "senderId": "admin",
+    "content": "防寒着はS〜3Lまで各サイズご用意しています。初日に採寸して、ご自身に合ったサイズをお渡しします。",
+    "messageType": "text",
+    "sentAt": "2024-07-08T15:45:00.000Z"
+  },
+  {
+    "id": "msg9",
+    "chatRoomId": "room3",
+    "senderId": "user1",
+    "content": "佐藤さん、案件の情報共有ありがとうございました！",
+    "messageType": "text",
+    "sentAt": "2024-07-08T16:00:00.000Z"
+  },
+  {
+    "id": "msg10",
+    "chatRoomId": "room3",
+    "senderId": "user2",
+    "content": "田中さんもお疲れ様でした。今度お茶でもしましょう！",
+    "messageType": "text",
+    "sentAt": "2024-07-08T16:20:00.000Z"
+  }
+] 

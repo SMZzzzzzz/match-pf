@@ -1,0 +1,29 @@
+[
+  {
+    "id": "admin",
+    "username": "admin@company.com",
+    "email": "admin@company.com",
+    "nickname": "管理者",
+    "role": "admin",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "user1",
+    "username": "tanaka@example.com",
+    "email": "tanaka@example.com", 
+    "nickname": "田中太郎",
+    "role": "worker",
+    "createdAt": "2024-01-02T00:00:00.000Z",
+    "updatedAt": "2024-01-02T00:00:00.000Z"
+  },
+  {
+    "id": "user2",
+    "username": "sato@example.com",
+    "email": "sato@example.com",
+    "nickname": "佐藤花子", 
+    "role": "worker",
+    "createdAt": "2024-01-03T00:00:00.000Z",
+    "updatedAt": "2024-01-03T00:00:00.000Z"
+  }
+] 

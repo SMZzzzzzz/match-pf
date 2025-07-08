@@ -1,0 +1,26 @@
+[
+  {
+    "id": "room1",
+    "name": null,
+    "isGroup": false,
+    "participants": ["admin", "user1"],
+    "createdAt": "2024-07-08T09:00:00.000Z",
+    "updatedAt": "2024-07-08T14:30:00.000Z"
+  },
+  {
+    "id": "room2",
+    "name": null,
+    "isGroup": false,
+    "participants": ["admin", "user2"],
+    "createdAt": "2024-07-08T10:00:00.000Z",
+    "updatedAt": "2024-07-08T15:45:00.000Z"
+  },
+  {
+    "id": "room3",
+    "name": null,
+    "isGroup": false,
+    "participants": ["user1", "user2"],
+    "createdAt": "2024-07-08T11:00:00.000Z",
+    "updatedAt": "2024-07-08T16:20:00.000Z"
+  }
+] 
