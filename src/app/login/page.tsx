@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
-import { Mail, Lock, LogIn, Loader2 } from 'lucide-react';
+import { Mail, Lock, Warehouse, LogIn, Loader2 } from 'lucide-react';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
   // 既にログイン済みの場合はリダイレクト
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/userlist');
+      router.push('/jobs');
     }
   }, [isAuthenticated, router]);
 
@@ -50,7 +50,7 @@ const LoginPage: React.FC = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-blue-100">
-            <LogIn className="h-8 w-8 text-blue-600" />
+            <Warehouse className="h-8 w-8 text-blue-600" />
           </div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
             ログイン

@@ -1,4 +1,4 @@
-# 🎨 UI設計書（SNSチャットアプリ）
+# 🎨 UI設計書（マッチングプラットフォーム）
 
 ## 基本方針
 
@@ -13,12 +13,102 @@
 - **背景カラー**: Gray-50 (#f9fafb) - 全体背景
 - **ホワイト**: #ffffff - カード、メッセージ背景
 - **アクセントカラー**: Blue-100 (#dbeafe) - 自分のアイコン背景
+- **成功色**: Green-500 (#10b981) - 成功メッセージ
+- **警告色**: Yellow-500 (#f59e0b) - 警告メッセージ
+- **エラー色**: Red-500 (#ef4444) - エラーメッセージ
 
 ### タイポグラフィ
 - **フォント**: システムフォント（font-sans）
-- **本文**: text-sm (14px) - メッセージ内容
+- **本文**: text-sm (14px) - メッセージ内容、説明文
 - **見出し**: font-medium - ユーザー名、タイトル
 - **補助テキスト**: text-xs (12px) - 時刻、ステータス
+- **大見出し**: text-lg (18px) - ページタイトル
+
+---
+
+## 🔐 認証画面設計
+
+### ログイン画面
+```typescript
+// 構成要素
+- プラットフォームロゴ
+- メールアドレス入力フィールド
+- パスワード入力フィールド
+- ログインボタン
+- 新規登録リンク
+
+// スタイリング
+- 中央配置レイアウト
+- 白背景カード
+- シャドウ効果
+- フォーカスリング
+```
+
+#### 実装詳細
+- **フォーム検証**: リアルタイムバリデーション
+- **エラー表示**: 入力フィールド下にエラーメッセージ
+- **ローディング状態**: ボタンでスピナー表示
+- **レスポンシブ**: モバイルで画面幅いっぱいに拡張
+
+---
+
+## 💼 案件管理UI設計
+
+### 案件一覧画面
+```typescript
+// カード設計
+- 案件タイトル: font-medium text-lg
+- 期間: text-sm text-gray-600
+- 勤務地: text-sm text-gray-600
+- 時給: text-lg font-bold text-blue-600
+- 募集人数: text-sm
+- お気に入りアイコン: Heart（塗りつぶし/アウトライン）
+
+// レイアウト
+- グリッドレイアウト（デスクトップ: 2列、モバイル: 1列）
+- カード間のスペース: gap-4
+- ホバー効果: shadow-lg
+```
+
+#### 実装詳細
+```typescript
+// 案件カード
+<div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200 p-6">
+  <div className="flex justify-between items-start mb-4">
+    <h3 className="text-lg font-medium text-gray-900">{job.title}</h3>
+    <button className="text-gray-400 hover:text-red-500">
+      <Heart className={`w-5 h-5 ${isFavorite ? 'fill-red-500' : ''}`} />
+    </button>
+  </div>
+  
+  <div className="space-y-2 mb-4">
+    <div className="flex items-center text-sm text-gray-600">
+      <Calendar className="w-4 h-4 mr-2" />
+      {job.period}
+    </div>
+    <div className="flex items-center text-sm text-gray-600">
+      <MapPin className="w-4 h-4 mr-2" />
+      {job.location}
+    </div>
+  </div>
+  
+  <div className="flex justify-between items-center">
+    <span className="text-lg font-bold text-blue-600">
+      ¥{job.hourlyWage}/時
+    </span>
+    <span className="text-sm text-gray-500">
+      募集{job.recruitNumber}名
+    </span>
+  </div>
+</div>
+```
+
+### 案件詳細画面
+- **ヘッダー**: 案件タイトル + お気に入りボタン
+- **基本情報**: 期間、勤務地、時給、募集人数
+- **詳細説明**: 業務内容の詳細
+- **アクションボタン**: 応募ボタン（将来実装）
+- **チャットボタン**: 管理者との1対1チャット
 
 ---
 
@@ -27,61 +117,105 @@
 ### 下部ナビゲーション（実装済み）
 
 **5つのタブ構成**:
-1. **メンバー** (Users) - ユーザー一覧
-2. **トーク** (MessageCircle) - チャット機能
-3. **タイムライン** (Clock) - 投稿機能（将来実装）
-4. **お知らせ** (Bell) - 通知機能（将来実装）
-5. **設定** (Settings) - 設定画面（将来実装）
+1. **案件** (Briefcase) - 案件一覧
+2. **ユーザー** (Users) - ユーザー一覧
+3. **トーク** (MessageCircle) - チャット機能
+4. **通知** (Bell) - お知らせ機能
+5. **設定** (Settings) - 設定画面
 
 #### 実装詳細
 ```typescript
 // レスポンシブ対応
 - デスクトップ: フルラベル表示
-- モバイル: 短縮ラベル（タイムライン→TL、お知らせ→通知）
+- モバイル(sm未満): 短縮ラベル（通知→通知、タイムライン→TL）
 
 // 状態管理
 - アクティブタブ: blue-600 + blue-50背景
-- 非アクティブタブ: gray-500 + hover効果
+- 非アクティブタブ: gray-500 + hover:gray-700
 
 // アイコンライブラリ
 - Lucide React使用（軽量、一貫性）
 ```
 
-#### AI側で工夫した点
-- **パスベース判定**: URLパスによる自動アクティブ状態管理
-- **チャット統合**: `/chat/[userId]`もトークタブとして認識
-- **レスポンシブテキスト**: 画面サイズに応じた自動テキスト切り替え
-- **ホバー効果**: デスクトップでの操作性向上
+#### 実装コード
+```typescript
+<nav className="bg-white border-t border-gray-200 px-4 py-2">
+  <div className="flex justify-around">
+    {navigation.map((item) => {
+      const isActive = pathname === item.href || 
+        (item.href === '/talk' && pathname.startsWith('/chat'));
+      
+      return (
+        <Link
+          key={item.name}
+          href={item.href}
+          className={`flex flex-col items-center py-2 px-3 rounded-md ${
+            isActive
+              ? 'text-blue-600 bg-blue-50'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          <item.icon className="w-6 h-6 mb-1" />
+          <span className="text-xs">
+            {item.name}
+          </span>
+        </Link>
+      );
+    })}
+  </div>
+</nav>
+```
 
 ---
 
 ## 💬 チャット機能UI設計
 
-### トーク画面構成（実装済み）
-
-#### ユーザーリスト画面
-**タブ切り替え設計**:
-- **ユーザー**: 全ユーザー一覧（1対1チャット用）
-- **グループ**: グループチャット一覧（将来実装）
-
+### ユーザー一覧画面（トーク）
 ```typescript
-// タブ実装
-const tabs = [
-  { id: 'users', label: 'ユーザー' },
-  { id: 'groups', label: 'グループ' }
-];
-
 // ユーザーカード設計
 - アイコン: 頭文字表示（8x8サイズ）
-- ユーザー名: メイン表示
-- ニックネーム: サブ表示
-- クリック→チャット画面遷移
+- ユーザー名: font-medium
+- ニックネーム: text-sm text-gray-600
+- ロール表示: バッジ形式
+- 最終ログイン: text-xs text-gray-400
+
+// レイアウト
+- リスト形式
+- 区切り線: border-b
+- ホバー効果: hover:bg-gray-50
 ```
 
-#### AI側で工夫した点
-- **統一感のあるカード**: 一貫したレイアウトとスタイリング
-- **視覚的階層**: ユーザー名とニックネームの適切な優先度
-- **インタラクション**: ホバー効果とクリック領域の最適化
+#### 実装詳細
+```typescript
+<div className="bg-white">
+  {users.map((user) => (
+    <Link
+      key={user.id}
+      href={`/chat/${user.id}`}
+      className="flex items-center p-4 hover:bg-gray-50 border-b border-gray-200 last:border-b-0"
+    >
+      <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+        <span className="text-lg font-medium text-gray-600">
+          {user.nickname.charAt(0)}
+        </span>
+      </div>
+      <div className="flex-1">
+        <div className="flex items-center justify-between">
+          <h3 className="font-medium text-gray-900">{user.nickname}</h3>
+          <span className={`px-2 py-1 text-xs rounded-full ${
+            user.role === 'admin' 
+              ? 'bg-blue-100 text-blue-800' 
+              : 'bg-gray-100 text-gray-800'
+          }`}>
+            {user.role === 'admin' ? '管理者' : '作業者'}
+          </span>
+        </div>
+        <p className="text-sm text-gray-600">{user.username}</p>
+      </div>
+    </Link>
+  ))}
+</div>
+```
 
 ### 1対1チャット画面（実装済み）
 
@@ -116,36 +250,55 @@ const tabs = [
 - 角丸: rounded-bl-sm（左下角を直角に）
 ```
 
-**発言者情報表示**:
+**メッセージ表示の実装**:
 ```typescript
-// アイコン
-- サイズ: w-8 h-8
-- 背景: 自分=blue-100、相手=gray-100
-- 位置: メッセージの横（適切なマージン）
-
-// ニックネーム
-- サイズ: text-xs
-- 色: text-gray-500
-- 位置: メッセージバブルの上
-
-// 時刻表示
-- サイズ: text-xs
-- 色: text-gray-400
-- 位置: メッセージ枠外の右下
-- マージン: 自分=mr-10、相手=ml-10
+<div className={`flex items-end space-x-2 ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
+  {!isMyMessage && (
+    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+      <span className="text-sm font-medium text-gray-600">
+        {message.sender.nickname.charAt(0)}
+      </span>
+    </div>
+  )}
+  
+  <div className="flex flex-col max-w-xs lg:max-w-md">
+    {!isMyMessage && (
+      <span className="text-xs text-gray-500 mb-1">
+        {message.sender.nickname}
+      </span>
+    )}
+    
+    <div className={`px-4 py-2 rounded-lg ${
+      isMyMessage 
+        ? 'bg-blue-600 text-white rounded-br-sm' 
+        : 'bg-white border border-gray-200 text-gray-900 rounded-bl-sm'
+    }`}>
+      {message.content}
+    </div>
+    
+    <span className={`text-xs text-gray-400 mt-1 ${
+      isMyMessage ? 'text-right mr-2' : 'text-left ml-2'
+    }`}>
+      {formatTime(message.sentAt)}
+    </span>
+  </div>
+  
+  {isMyMessage && (
+    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+      <span className="text-sm font-medium text-blue-600">
+        {message.sender.nickname.charAt(0)}
+      </span>
+    </div>
+  )}
+</div>
 ```
-
-#### AI側で工夫した点
-- **flex-row-reverse対応**: space-xの問題を回避し、適切なマージン設定
-- **視覚的バランス**: アイコン、ニックネーム、時刻の配置最適化
-- **日付区切り**: 日付が変わる際の自動区切り表示
-- **自動スクロール**: 新メッセージ受信時の最下部スクロール
 
 #### メッセージ入力エリア
 ```typescript
 // 構成
 - テキスト入力: rounded-full + focus:ring
-- 送信ボタン: 条件付きスタイル + アイコン
+- 送信ボタン: 条件付きスタイル + Send アイコン
+- 添付ファイルボタン: Paperclip アイコン（将来実装）
 
 // 状態管理
 - 送信中: disabled + visual feedback
@@ -167,10 +320,46 @@ const tabs = [
 - ロケール: ja-JP
 ```
 
-#### AI側で工夫した点
-- **国際化対応**: 日本語ロケールでの適切な日時表示
-- **相対日付**: ユーザーフレンドリーな日付表現
-- **一貫性**: 全体を通じた統一されたフォーマット
+---
+
+## 👥 ユーザー管理UI設計
+
+### ユーザー一覧画面
+```typescript
+// 検索バー
+- 検索アイコン: Search
+- プレースホルダー: "ユーザーを検索..."
+- リアルタイム検索
+
+// ユーザーカード
+- プロフィール画像: 頭文字アイコン
+- ユーザー名: font-medium
+- ニックネーム: text-sm text-gray-600
+- ロールバッジ: 管理者/作業者
+- チャットボタン: MessageCircle アイコン
+```
+
+#### 実装詳細
+```typescript
+// 検索機能
+const [searchTerm, setSearchTerm] = useState('');
+const filteredUsers = users.filter(user =>
+  user.nickname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  user.username.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
+// 検索バー
+<div className="relative mb-4">
+  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+  <input
+    type="text"
+    placeholder="ユーザーを検索..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  />
+</div>
+```
 
 ---
 
@@ -180,7 +369,14 @@ const tabs = [
 ```css
 /* Tailwind CSS ブレークポイント */
 - sm: 640px以上（タブレット）
+- md: 768px以上（中型タブレット）
 - lg: 1024px以上（デスクトップ）
+- xl: 1280px以上（大型デスクトップ）
+
+/* 案件カード幅制御 */
+- モバイル: w-full （全幅）
+- タブレット: sm:w-1/2（2列）
+- デスクトップ: lg:w-1/3（3列）
 
 /* メッセージ幅制御 */
 - モバイル: max-w-xs (20rem)
@@ -191,185 +387,232 @@ const tabs = [
 - **タッチ対応**: 適切なタッチターゲットサイズ（44px以上）
 - **スクロール**: 慣性スクロール対応
 - **キーボード**: 入力時のビューポート調整
+- **フォント**: 読みやすいフォントサイズ
 
-#### AI側で工夫した点
-- **条件分岐**: 画面サイズに応じたコンポーネント表示切り替え
-- **パフォーマンス**: 不要な再レンダリング防止
-- **アクセシビリティ**: フォーカス管理とキーボードナビゲーション
+#### 実装例
+```typescript
+// レスポンシブグリッド
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+  {jobs.map((job) => (
+    <JobCard key={job.id} job={job} />
+  ))}
+</div>
+
+// レスポンシブナビゲーション
+<nav className="bg-white border-t border-gray-200 px-2 sm:px-4 py-2">
+  <div className="flex justify-around max-w-screen-lg mx-auto">
+    {navigation.map((item) => (
+      <Link
+        key={item.name}
+        href={item.href}
+        className="flex flex-col items-center py-2 px-1 sm:px-3 rounded-md"
+      >
+        <item.icon className="w-5 h-5 sm:w-6 sm:h-6 mb-1" />
+        <span className="text-xs sm:text-sm">
+          {item.name}
+        </span>
+      </Link>
+    ))}
+  </div>
+</nav>
+```
 
 ---
 
 ## 🎨 コンポーネント設計
 
-### 実装済みコンポーネント
+### 共通コンポーネント
 
-#### `AuthProvider`
+#### ボタンコンポーネント
 ```typescript
-// 機能
-- グローバル認証状態管理
-- 自動リダイレクト
-- ローディング状態管理
+// Primary Button
+<button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+  プライマリボタン
+</button>
 
-// UI要素
-- ローディングスピナー
-- 中央配置レイアウト
+// Secondary Button
+<button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+  セカンダリボタン
+</button>
+
+// Outline Button
+<button className="border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+  アウトラインボタン
+</button>
 ```
 
-#### `BottomNavigation`
+#### 入力フィールド
 ```typescript
-// 機能
-- 5タブナビゲーション
-- アクティブ状態管理
-- レスポンシブラベル
+// Text Input
+<input
+  type="text"
+  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+  placeholder="プレースホルダー"
+/>
 
-// UI要素
-- アイコン + テキスト
-- ホバー効果
-- アクティブ状態のハイライト
+// Error State
+<input
+  type="text"
+  className="w-full px-3 py-2 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+/>
+<p className="text-sm text-red-600 mt-1">エラーメッセージ</p>
 ```
 
-#### `ChatPage`
+#### カードコンポーネント
 ```typescript
-// 機能
-- 1対1チャット
-- リアルタイムメッセージ
-- 楽観的UI更新
+// Basic Card
+<div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+  <h3 className="text-lg font-medium mb-4">カードタイトル</h3>
+  <p className="text-gray-600">カードの内容</p>
+</div>
 
-// UI要素
-- ヘッダー（戻る + ユーザー情報）
-- メッセージエリア（スクロール可能）
-- 入力エリア（送信フォーム）
+// Interactive Card
+<div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-200 p-6 cursor-pointer">
+  <h3 className="text-lg font-medium mb-4">インタラクティブカード</h3>
+  <p className="text-gray-600">ホバー効果付き</p>
+</div>
 ```
-
-### 将来実装予定コンポーネント
-
-#### `GroupChatList`
-- グループ一覧表示
-- 最新メッセージプレビュー
-- 未読バッジ表示
-
-#### `TimelineCard`
-- 投稿カード形式
-- 画像 + テキスト
-- いいねボタン
-
-#### `NotificationList`
-- 通知一覧
-- 既読/未読状態
-- 通知タイプ別アイコン
 
 ---
 
-## 🔧 インタラクション設計
+## 🔄 アニメーション・トランジション
 
-### アニメーション・トランジション
+### 基本トランジション
 ```css
-/* 実装済み */
-- ホバー効果: hover:bg-gray-100
-- フォーカス: focus:ring-2 focus:ring-blue-500
-- トランジション: transition-colors
+/* ホバー効果 */
+.transition-all { transition: all 0.2s ease-in-out; }
+.transition-colors { transition: color 0.2s ease-in-out; }
+.transition-shadow { transition: box-shadow 0.2s ease-in-out; }
 
-/* 将来実装予定 */
-- メッセージ送信アニメーション
-- ページ遷移トランジション
-- ローディング状態アニメーション
+/* フェードイン */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 ```
 
-### フィードバック設計
-- **送信状態**: ボタンの無効化 + 視覚的フィードバック
-- **エラー状態**: 適切なエラーメッセージ表示
-- **成功状態**: 楽観的UI更新
-
-#### AI側で工夫した点
-- **一貫性**: 全体を通じた統一されたインタラクション
-- **予測可能性**: ユーザーの期待に沿った動作
-- **パフォーマンス**: 60fps維持のための最適化
-
----
-
-## 📐 レイアウトシステム
-
-### グリッドシステム
+### メッセージアニメーション
 ```typescript
-// Flexboxベース
-- 縦方向: flex flex-col
-- 横方向: flex items-center
-- 配置: justify-start/center/end
+// 新しいメッセージの表示アニメーション
+<div className="animate-fade-in">
+  <MessageBubble message={message} />
+</div>
 
-// スペーシング
-- 統一マージン: space-y-4, space-x-2
-- パディング: p-4, px-4, py-3
+// 送信中のローディングアニメーション
+<div className="flex items-center space-x-2">
+  <div className="animate-pulse w-2 h-2 bg-gray-400 rounded-full"></div>
+  <div className="animate-pulse w-2 h-2 bg-gray-400 rounded-full animation-delay-200"></div>
+  <div className="animate-pulse w-2 h-2 bg-gray-400 rounded-full animation-delay-400"></div>
+</div>
 ```
 
-### 余白設計
-```css
-/* 統一された余白システム */
-- xs: 0.25rem (1)
-- sm: 0.5rem (2)
-- md: 1rem (4)
-- lg: 1.5rem (6)
-- xl: 2rem (8)
+---
+
+## 📊 データ表示設計
+
+### 統計情報表示
+```typescript
+// 案件統計
+<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+  <div className="bg-white p-6 rounded-lg shadow-sm">
+    <div className="text-2xl font-bold text-blue-600">12</div>
+    <div className="text-sm text-gray-600">募集中の案件</div>
+  </div>
+  <div className="bg-white p-6 rounded-lg shadow-sm">
+    <div className="text-2xl font-bold text-green-600">5</div>
+    <div className="text-sm text-gray-600">応募済み</div>
+  </div>
+</div>
 ```
 
-#### AI側で工夫した点
-- **一貫性**: 統一された余白システム
-- **階層**: 適切な視覚的階層の構築
-- **バランス**: 要素間の適切な関係性
+### 空状態の表示
+```typescript
+// データなし状態
+<div className="text-center py-12">
+  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+    <Search className="w-8 h-8 text-gray-400" />
+  </div>
+  <h3 className="text-lg font-medium text-gray-900 mb-2">
+    案件が見つかりません
+  </h3>
+  <p className="text-gray-600">
+    検索条件を変更してください
+  </p>
+</div>
+```
 
 ---
 
-## 🎯 ユーザビリティ設計
+## 🚀 パフォーマンス最適化
 
-### アクセシビリティ
-- **キーボードナビゲーション**: Tab順序の最適化
-- **スクリーンリーダー**: 適切なaria-label
-- **コントラスト**: WCAG AA準拠
+### 画像最適化
+```typescript
+// Next.js Image コンポーネント
+import Image from 'next/image';
 
-### パフォーマンス
-- **遅延ローディング**: 必要に応じた動的読み込み
-- **メモ化**: React.memo, useMemo活用
-- **最適化**: 不要な再レンダリング防止
+<Image
+  src="/profile-image.jpg"
+  alt="プロフィール画像"
+  width={48}
+  height={48}
+  className="rounded-full"
+  priority // 重要な画像に対して
+/>
+```
 
-#### AI側で工夫した点
-- **プログレッシブエンハンスメント**: 基本機能の確実な動作
-- **グレースフルデグラデーション**: エラー時の適切な処理
-- **ユーザー中心設計**: 実際の使用シーンを考慮した設計
+### 遅延読み込み
+```typescript
+// React.lazy を使用した遅延読み込み
+const ChatPage = React.lazy(() => import('./ChatPage'));
 
----
-
-## 🚀 今後の拡張予定
-
-### UI機能拡張
-- **ダークモード**: システム設定連動
-- **カスタムテーマ**: ユーザー設定可能
-- **アニメーション**: より豊かなマイクロインタラクション
-
-### 新機能UI
-- **ファイル送信**: ドラッグ&ドロップ対応
-- **絵文字**: ピッカー機能
-- **メンション**: @ユーザー名補完
-
-### パフォーマンス最適化
-- **仮想スクロール**: 大量メッセージ対応
-- **画像最適化**: WebP対応、遅延読み込み
-- **キャッシュ**: 適切なデータキャッシング
+// 使用時
+<Suspense fallback={<div>読み込み中...</div>}>
+  <ChatPage />
+</Suspense>
+```
 
 ---
 
-## 📝 設計原則まとめ
+## 💡 今後の改善点
 
-### 実装で重視した点
-1. **一貫性**: 統一されたデザインシステム
-2. **使いやすさ**: 直感的な操作性
-3. **レスポンシブ**: 全デバイス対応
-4. **パフォーマンス**: 高速な動作
-5. **拡張性**: 将来機能への対応
+### 短期的改善
+- **ダークモード**: 完全なダークモード対応
+- **アニメーション**: より滑らかなアニメーション
+- **アクセシビリティ**: キーボードナビゲーション強化
+- **パフォーマンス**: 仮想スクロール導入
 
-### AI側で特に工夫した設計決定
-1. **flex-row-reverse問題の解決**: space-xの代わりに個別マージン設定
-2. **条件分岐の最適化**: 複雑な条件をシンプルな構造に
-3. **状態管理の統一**: 一貫したローディング・エラー処理
-4. **アクセシビリティの確保**: 適切なフォーカス管理
-5. **パフォーマンスの最適化**: 不要な再レンダリング防止
+### 中期的改善
+- **デザインシステム**: 統一されたデザインシステム構築
+- **コンポーネントライブラリ**: 共通コンポーネントの体系化
+- **テーマ機能**: カスタマイズ可能なテーマ
+- **国際化**: 多言語対応
 
-この設計により、美しく使いやすい、そして拡張可能なSNSチャットアプリのUIが実現されています。
+### 長期的改善
+- **PWA化**: オフライン対応
+- **ネイティブアプリ**: React Native版の開発
+- **音声UI**: 音声操作対応
+- **AI統合**: チャットボット機能
+
+---
+
+## 📝 デザインガイドライン
+
+### DO's（推奨）
+- **一貫性**: 統一されたスタイリング
+- **階層**: 明確な情報階層
+- **フィードバック**: 適切なユーザーフィードバック
+- **アクセシビリティ**: 包括的なデザイン
+
+### DON'Ts（非推奨）
+- **過度な装飾**: 機能性を損なう装飾
+- **不統一**: 一貫性のないデザイン
+- **小さなタッチターゲット**: 44px未満のボタン
+- **低コントラスト**: 読みにくい色の組み合わせ
+
+---
+
+このUI設計書により、マッチングプラットフォームの一貫性のある美しいユーザーインターフェースを実現し、優れたユーザー体験を提供します。
