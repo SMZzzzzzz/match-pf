@@ -11,7 +11,7 @@ import {
   getMessagesByRoomId, 
   addMessage 
 } from '@/lib/data';
-import { Message, MessageWithSender, User, ChatRoom } from '@/types';
+import { MessageWithSender, User, ChatRoom } from '@/types';
 import { ArrowLeft, Send, MoreVertical } from 'lucide-react';
 
 // 日付フォーマット関数

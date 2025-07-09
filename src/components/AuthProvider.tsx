@@ -111,7 +111,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         dispatch({ type: 'LOGIN_FAILURE', payload: 'メールアドレスまたはパスワードが正しくありません' });
         return { success: false, error: 'メールアドレスまたはパスワードが正しくありません' };
       }
-    } catch (error) {
+    } catch {
       const errorMessage = 'ログインに失敗しました';
       dispatch({ type: 'LOGIN_FAILURE', payload: errorMessage });
       return { success: false, error: errorMessage };
